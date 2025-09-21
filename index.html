@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AVCB App - Teste Simples</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f0f0f0;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        button {
+            background: #007AFF;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .result {
+            margin: 10px 0;
+            padding: 10px;
+            background: #e8f4fd;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 AVCB App - Teste da API</h1>
+        <p>Backend: <span id="status">Verificando...</span></p>
+        
+        <h2>Teste Rápido da API</h2>
+        <button onclick="testAPI()">Testar Conexão com API</button>
+        <button onclick="registerUser()">Registrar Usuário Teste</button>
+        <button onclick="getUsers()">Listar Usuários</button>
+        
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:3000/api';
+        
+        // Verificar se API está online
+        async function checkAPI() {
+            try {
+                const response = await fetch(`${API_BASE}/users`);
+                document.getElementById('status').innerHTML = '🟢 Online';
+                document.getElementById('status').style.color = 'green';
+            } catch (error) {
+                document.getElementById('status').innerHTML = '🔴 Offline';
+                document.getElementById('status').style.color = 'red';
+            }
+        }
+        
+        async function testAPI() {
+            const result = document.getElementById('result');
+            try {
+                const response = await fetch(`${API_BASE}/users`);
+                if (response.status === 401) {
+                    result.innerHTML = '✅ API funcionando! (Precisa de autenticação para ver usuários)';
+                } else if (response.ok) {
+                    result.innerHTML = '✅ API funcionando! Conexão estabelecida.';
+                } else {
+                    result.innerHTML = '⚠️ API respondeu mas com erro: ' + response.status;
+                }
+            } catch (error) {
+                result.innerHTML = '❌ Erro: ' + error.message;
+            }
+        }
+        
+        async function registerUser() {
+            const result = document.getElementById('result');
+            try {
+                const response = await fetch(`${API_BASE}/auth/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        name: 'Usuário Teste',
+                        email: 'teste@exemplo.com',
+                        password: '123456'
+                    })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    result.innerHTML = '✅ Usuário registrado com sucesso!<br>Token: ' + data.access_token.substring(0, 20) + '...';
+                    localStorage.setItem('token', data.access_token);
+                } else {
+                    const error = await response.text();
+                    result.innerHTML = '❌ Erro ao registrar: ' + error;
+                }
+            } catch (error) {
+                result.innerHTML = '❌ Erro: ' + error.message;
+            }
+        }
+        
+        async function getUsers() {
+            const result = document.getElementById('result');
+            const token = localStorage.getItem('token');
+            
+            if (!token) {
+                result.innerHTML = '⚠️ Faça login primeiro (registre um usuário)';
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE}/users`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (response.ok) {
+                    const users = await response.json();
+                    result.innerHTML = '✅ Usuários encontrados:<br>' + 
+                        users.map(u => `• ${u.name} (${u.email})`).join('<br>');
+                } else {
+                    result.innerHTML = '❌ Erro ao buscar usuários: ' + response.status;
+                }
+            } catch (error) {
+                result.innerHTML = '❌ Erro: ' + error.message;
+            }
+        }
+        
+        // Verificar API na inicialização
+        checkAPI();
+    </script>
+</body>
+</html>

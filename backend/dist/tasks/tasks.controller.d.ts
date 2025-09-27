@@ -12,10 +12,10 @@ export declare class TasksController {
         id: string;
         createdAt: Date;
         updatedAt: Date;
+        userId: string;
         title: string;
         description: string | null;
         completed: boolean;
-        userId: string;
     }>;
     findAll(userId?: string): Promise<({
         user: {
@@ -27,10 +27,10 @@ export declare class TasksController {
         id: string;
         createdAt: Date;
         updatedAt: Date;
+        userId: string;
         title: string;
         description: string | null;
         completed: boolean;
-        userId: string;
     })[]>;
     findOne(id: string): Promise<{
         user: {
@@ -42,10 +42,10 @@ export declare class TasksController {
         id: string;
         createdAt: Date;
         updatedAt: Date;
+        userId: string;
         title: string;
         description: string | null;
         completed: boolean;
-        userId: string;
     }>;
     update(id: string, updateTaskDto: UpdateTaskDto): Promise<{
         user: {
@@ -57,10 +57,10 @@ export declare class TasksController {
         id: string;
         createdAt: Date;
         updatedAt: Date;
+        userId: string;
         title: string;
         description: string | null;
         completed: boolean;
-        userId: string;
     }>;
     remove(id: string): Promise<void>;
 }

@@ -270,12 +270,25 @@
                 <p><strong>Nome:</strong> <span id="userName"></span></p>
                 <p><strong>Email:</strong> <span id="userEmail"></span></p>
                 <p><strong>Token:</strong> <span id="userToken"></span></p>
-                <button class="btn btn-secondary" onclick="logout()" style="margin-top: 15px;">
-                    Sair
-                </button>
-                <button class="btn btn-primary" onclick="viewDashboard()" style="margin-top: 15px;">
-                    Ver Dashboard
-                </button>
+                
+                <div style="margin-top: 20px;">
+                    <h4>Projetos</h4>
+                    <button class="btn btn-primary" onclick="criarNovoProjeto()" style="margin: 5px 0;">
+                        ➕ Criar Novo Projeto
+                    </button>
+                    <button class="btn btn-secondary" onclick="verProjetosAnteriores()" style="margin: 5px 0;">
+                        📋 Projetos Anteriores
+                    </button>
+                </div>
+                
+                <div style="margin-top: 20px;">
+                    <button class="btn btn-secondary" onclick="logout()" style="margin: 5px;">
+                        Sair
+                    </button>
+                    <button class="btn btn-primary" onclick="viewDashboard()" style="margin: 5px;">
+                        Ver Dashboard
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -470,6 +483,30 @@
                     statusDiv.style.display = 'none';
                 }, 3000);
             }
+        }
+
+        function criarNovoProjeto() {
+            // Verificar se o usuário está logado
+            const token = localStorage.getItem('avcb_token');
+            if (!token) {
+                showStatus('Faça login primeiro para criar um projeto', 'error');
+                return;
+            }
+            
+            // Navegar para a página de novo projeto
+            window.location.href = 'http://localhost:8081/novo-projeto.html';
+        }
+
+        function verProjetosAnteriores() {
+            // Verificar se o usuário está logado
+            const token = localStorage.getItem('avcb_token');
+            if (!token) {
+                showStatus('Faça login primeiro para ver os projetos', 'error');
+                return;
+            }
+            
+            // Navegar para a página de projetos anteriores
+            window.location.href = 'http://localhost:8081/projetos-anteriores.html';
         }
     </script>
 </body>

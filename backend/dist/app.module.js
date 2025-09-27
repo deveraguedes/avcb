@@ -11,7 +11,9 @@ const common_1 = require("@nestjs/common");
 const auth_module_1 = require("./auth/auth.module");
 const users_module_1 = require("./users/users.module");
 const tasks_module_1 = require("./tasks/tasks.module");
+const projetos_module_1 = require("./projetos/projetos.module");
 const prisma_module_1 = require("./prisma/prisma.module");
+const test_controller_1 = require("./test.controller");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -22,7 +24,9 @@ exports.AppModule = AppModule = __decorate([
             auth_module_1.AuthModule,
             users_module_1.UsersModule,
             tasks_module_1.TasksModule,
+            projetos_module_1.ProjetosModule,
         ],
+        controllers: [test_controller_1.TestController],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map

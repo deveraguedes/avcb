@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste Classificação - AVCB</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            margin: 20px 0;
+        }
+        
+        .section-title {
+            color: #4a5568;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #4a5568;
+        }
+        
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+        }
+        
+        .btn-info {
+            background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
+        }
+        
+        .btn-warning {
+            background: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%);
+        }
+        
+        .response-area {
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 15px;
+            min-height: 200px;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            overflow-x: auto;
+        }
+        
+        .error {
+            color: #e53e3e;
+            background: #fed7d7;
+            border: 1px solid #feb2b2;
+            padding: 10px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        
+        .success {
+            color: #38a169;
+            background: #c6f6d5;
+            border: 1px solid #9ae6b4;
+            padding: 10px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        
+        .row {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .col {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        th, td {
+            border: 1px solid #e2e8f0;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background: #f7fafc;
+            font-weight: bold;
+            color: #4a5568;
+        }
+        
+        tr:nth-child(even) {
+            background: #f7fafc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔥 Sistema AVCB - Teste Classificação</h1>
+            <p>Testando API de Classificação de Ocupação</p>
+        </div>
+        
+        <!-- Seção de Testes -->
+        <div class="card">
+            <div class="section-title">🧪 Testes da API</div>
+            <div class="actions">
+                <button class="btn btn-info" onclick="listarClassificacoes()">📋 Listar Todas</button>
+                <button class="btn btn-success" onclick="testarCriacaoExemplo()">➕ Criar Exemplo</button>
+                <button class="btn btn-warning" onclick="testarBuscarPorCodigo()">🔍 Buscar por Código</button>
+                <button class="btn" onclick="limparResultados()">🧹 Limpar</button>
+            </div>
+            <div id="response" class="response-area"></div>
+        </div>
+        
+        <!-- Seção de Criação Manual -->
+        <div class="card">
+            <div class="section-title">📝 Criar Nova Classificação</div>
+            <form id="classificacaoForm">
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="codigo">Código:</label>
+                            <input type="text" id="codigo" name="codigo" placeholder="Ex: A-1" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="ocupacao">Ocupação:</label>
+                            <input type="text" id="ocupacao" name="ocupacao" placeholder="Ex: Residencial unifamiliar" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="classificacao">Classificação:</label>
+                            <input type="text" id="classificacao" name="classificacao" placeholder="Ex: Residencial" required>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="grupo">Grupo:</label>
+                            <input type="text" id="grupo" name="grupo" placeholder="Ex: A">
+                        </div>
+                        <div class="form-group">
+                            <label for="subgrupo">Subgrupo:</label>
+                            <input type="text" id="subgrupo" name="subgrupo" placeholder="Ex: A-1">
+                        </div>
+                        <div class="form-group">
+                            <label for="divisao">Divisão:</label>
+                            <input type="text" id="divisao" name="divisao" placeholder="Ex: Habitacional">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="cargaIncendio">Carga de Incêndio (MJ/m²):</label>
+                            <input type="number" step="0.01" id="cargaIncendio" name="cargaIncendio" placeholder="Ex: 300.00">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="ativo">Status:</label>
+                            <select id="ativo" name="ativo">
+                                <option value="true">Ativo</option>
+                                <option value="false">Inativo</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="observacoes">Observações:</label>
+                    <textarea id="observacoes" name="observacoes" rows="3" placeholder="Observações adicionais..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-success">💾 Salvar Classificação</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:3000';
+        const responseDiv = document.getElementById('response');
+
+        function log(message, isError = false) {
+            const timestamp = new Date().toLocaleTimeString();
+            const prefix = isError ? '❌ ERROR' : '✅ SUCCESS';
+            responseDiv.textContent += `[${timestamp}] ${prefix}: ${message}\n`;
+            responseDiv.scrollTop = responseDiv.scrollHeight;
+        }
+
+        function limparResultados() {
+            responseDiv.textContent = '';
+        }
+
+        async function listarClassificacoes() {
+            try {
+                const response = await fetch(`${API_BASE}/classificacao`);
+                const data = await response.json();
+                
+                if (response.ok) {
+                    log(`Encontradas ${data.length} classificações:`);
+                    if (data.length > 0) {
+                        responseDiv.textContent += JSON.stringify(data, null, 2) + '\n';
+                    } else {
+                        log('Nenhuma classificação encontrada no banco.');
+                    }
+                } else {
+                    log(`Erro ${response.status}: ${data.message || 'Erro desconhecido'}`, true);
+                }
+            } catch (error) {
+                log(`Erro de conexão: ${error.message}`, true);
+            }
+        }
+
+        async function testarCriacaoExemplo() {
+            const exemplo = {
+                codigo: 'A-1',
+                ocupacao: 'Residencial unifamiliar',
+                classificacao: 'Residencial',
+                grupo: 'A',
+                subgrupo: 'A-1',
+                divisao: 'Habitacional',
+                carga_incendio_mj_m2: 300.00,
+                observacoes: 'Exemplo de teste criado automaticamente',
+                ativo: true
+            };
+
+            try {
+                const response = await fetch(`${API_BASE}/classificacao`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(exemplo)
+                });
+
+                const data = await response.json();
+                
+                if (response.ok) {
+                    log('Classificação de exemplo criada com sucesso!');
+                    responseDiv.textContent += JSON.stringify(data, null, 2) + '\n';
+                } else {
+                    log(`Erro ${response.status}: ${data.message || 'Erro desconhecido'}`, true);
+                }
+            } catch (error) {
+                log(`Erro de conexão: ${error.message}`, true);
+            }
+        }
+
+        async function testarBuscarPorCodigo() {
+            try {
+                const response = await fetch(`${API_BASE}/classificacao`);
+                const data = await response.json();
+                
+                if (response.ok && data.length > 0) {
+                    const codigo = data[0].codigo;
+                    log(`Testando busca por código: ${codigo}`);
+                    
+                    const searchResponse = await fetch(`${API_BASE}/classificacao/${data[0].id}`);
+                    const searchData = await searchResponse.json();
+                    
+                    if (searchResponse.ok) {
+                        log('Classificação encontrada por ID:');
+                        responseDiv.textContent += JSON.stringify(searchData, null, 2) + '\n';
+                    } else {
+                        log(`Erro na busca: ${searchData.message}`, true);
+                    }
+                } else {
+                    log('Nenhuma classificação disponível para teste de busca.', true);
+                }
+            } catch (error) {
+                log(`Erro de conexão: ${error.message}`, true);
+            }
+        }
+
+        // Form submission
+        document.getElementById('classificacaoForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const data = {};
+            
+            for (let [key, value] of formData.entries()) {
+                if (key === 'ativo') {
+                    data[key] = value === 'true';
+                } else if (key === 'cargaIncendio') {
+                    data['carga_incendio_mj_m2'] = value ? parseFloat(value) : null;
+                } else {
+                    data[key] = value || null;
+                }
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/classificacao`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+                
+                if (response.ok) {
+                    log('Classificação criada com sucesso!');
+                    responseDiv.textContent += JSON.stringify(result, null, 2) + '\n';
+                    e.target.reset();
+                } else {
+                    log(`Erro ${response.status}: ${result.message || 'Erro desconhecido'}`, true);
+                }
+            } catch (error) {
+                log(`Erro de conexão: ${error.message}`, true);
+            }
+        });
+
+        // Teste inicial
+        window.addEventListener('load', () => {
+            log('Sistema de Classificação AVCB carregado!');
+            log('Clique nos botões acima para testar a API.');
+        });
+    </script>
+</body>
+</html>

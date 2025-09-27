@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projetos Anteriores - AVCB</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+            animation: slideUp 0.6s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #f8f9fa;
+            padding-bottom: 20px;
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #7f8c8d;
+            font-size: 16px;
+        }
+
+        .user-info {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-left: 4px solid #007AFF;
+        }
+
+        .user-info p {
+            color: #6c757d;
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .actions {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #007AFF, #0051D5);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 122, 255, 0.3);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+            transform: translateY(-2px);
+        }
+
+        .projects-container {
+            margin-top: 20px;
+        }
+
+        .project-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 4px solid #28a745;
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .project-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: #2c3e50;
+            flex: 1;
+        }
+
+        .project-id {
+            background: #007AFF;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .project-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .project-detail {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-detail label {
+            font-size: 12px;
+            color: #6c757d;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .project-detail span {
+            font-size: 14px;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+
+        .project-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-small {
+            padding: 8px 15px;
+            font-size: 12px;
+        }
+
+        .status {
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: none;
+            font-weight: 500;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #6c757d;
+        }
+
+        .empty-state h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        .empty-state p {
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #6c757d;
+            font-size: 16px;
+        }
+
+        .situacao-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .situacao-1 {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .situacao-0 {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .actions {
+                flex-direction: column;
+            }
+            
+            .project-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .project-actions {
+                justify-content: stretch;
+            }
+            
+            .project-actions .btn-small {
+                flex: 1;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📋 Projetos Anteriores</h1>
+            <p>Gerencie seus projetos AVCB</p>
+        </div>
+
+        <div class="user-info">
+            <p><strong>Usuário:</strong> <span id="currentUser">Carregando...</span> | <strong>Total de Projetos:</strong> <span id="totalProjetos">0</span></p>
+        </div>
+
+        <div class="actions">
+            <button class="btn btn-primary" onclick="window.location.href='novo-projeto.html'">
+                ➕ Novo Projeto
+            </button>
+            <button class="btn btn-secondary" onclick="carregarProjetos()">
+                🔄 Atualizar
+            </button>
+            <button class="btn btn-secondary" onclick="voltarAoLogin()">
+                ⬅️ Voltar ao Login
+            </button>
+        </div>
+
+        <div id="status" class="status"></div>
+
+        <div class="projects-container">
+            <div id="loading" class="loading">
+                🔄 Carregando projetos...
+            </div>
+            
+            <div id="projectsList" style="display: none;">
+                <!-- Projetos serão carregados aqui -->
+            </div>
+            
+            <div id="emptyState" class="empty-state" style="display: none;">
+                <h3>📝 Nenhum projeto encontrado</h3>
+                <p>Você ainda não criou nenhum projeto. Que tal começar agora?</p>
+                <button class="btn btn-primary" onclick="window.location.href='novo-projeto.html'">
+                    ➕ Criar Primeiro Projeto
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let projetos = [];
+
+        // Verificar se há token salvo
+        const token = localStorage.getItem('avcb_token');
+        if (!token) {
+            showStatus('Você precisa estar logado para ver os projetos', 'error');
+            setTimeout(() => {
+                window.location.href = 'login.html';
+            }, 2000);
+        } else {
+            // Buscar dados do usuário
+            const userData = localStorage.getItem('avcb_user');
+            if (userData) {
+                const user = JSON.parse(userData);
+                document.getElementById('currentUser').textContent = user.name || user.email;
+            }
+            
+            // Carregar projetos
+            carregarProjetos();
+        }
+
+        async function carregarProjetos() {
+            try {
+                showLoading(true);
+                showStatus('Carregando projetos...', 'info');
+                
+                const response = await fetch('http://localhost:3000/api/projetos', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Erro: ${response.status}`);
+                }
+
+                projetos = await response.json();
+                
+                showLoading(false);
+                document.getElementById('status').style.display = 'none';
+                
+                renderizarProjetos();
+                
+            } catch (error) {
+                console.error('Erro ao carregar projetos:', error);
+                showLoading(false);
+                showStatus('Erro ao carregar projetos. Verifique sua conexão.', 'error');
+            }
+        }
+
+        function renderizarProjetos() {
+            const projectsList = document.getElementById('projectsList');
+            const emptyState = document.getElementById('emptyState');
+            const totalProjetos = document.getElementById('totalProjetos');
+            
+            totalProjetos.textContent = projetos.length;
+            
+            if (projetos.length === 0) {
+                projectsList.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+            
+            emptyState.style.display = 'none';
+            projectsList.style.display = 'block';
+            
+            projectsList.innerHTML = projetos.map(projeto => `
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-name">${projeto.nome}</div>
+                        <div class="project-id">ID: ${projeto.id}</div>
+                    </div>
+                    
+                    <div class="project-details">
+                        <div class="project-detail">
+                            <label>Empresa</label>
+                            <span>${projeto.nome_empresa}</span>
+                        </div>
+                        <div class="project-detail">
+                            <label>CNPJ</label>
+                            <span>${projeto.cnpj}</span>
+                        </div>
+                        <div class="project-detail">
+                            <label>CNAE</label>
+                            <span>${projeto.cnae}</span>
+                        </div>
+                        <div class="project-detail">
+                            <label>Tipo</label>
+                            <span>${projeto.tipo_projeto}</span>
+                        </div>
+                        <div class="project-detail">
+                            <label>Cidade/Estado</label>
+                            <span>${projeto.cidade}/${projeto.estado}</span>
+                        </div>
+                        <div class="project-detail">
+                            <label>Responsável</label>
+                            <span>${projeto.responsavel}</span>
+                        </div>
+                        <div class="project-detail">
+                            <label>Telefone</label>
+                            <span>${projeto.telefone_contato}</span>
+                        </div>
+                        <div class="project-detail">
+                            <label>Data de Criação</label>
+                            <span>${formatarData(projeto.data_criacao)}</span>
+                        </div>
+                        <div class="project-detail">
+                            <label>Situação</label>
+                            <span class="situacao-badge situacao-${projeto.situacao}">
+                                ${projeto.situacao === 1 ? '✅ Ativo' : '❌ Inativo'}
+                            </span>
+                        </div>
+                        ${projeto.numero_projeto_anterior ? `
+                        <div class="project-detail">
+                            <label>Projeto Anterior</label>
+                            <span>${projeto.numero_projeto_anterior}</span>
+                        </div>
+                        ` : ''}
+                    </div>
+                    
+                    <div class="project-actions">
+                        <button class="btn btn-primary btn-small" onclick="verDetalhes(${projeto.id})">
+                            👁️ Ver Detalhes
+                        </button>
+                        <button class="btn btn-success btn-small" onclick="editarProjeto(${projeto.id})">
+                            ✏️ Editar
+                        </button>
+                        <button class="btn btn-secondary btn-small" onclick="duplicarProjeto(${projeto.id})">
+                            📋 Duplicar
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function formatarData(dataString) {
+            const data = new Date(dataString);
+            return data.toLocaleDateString('pt-BR') + ' às ' + data.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+        }
+
+        function showLoading(show) {
+            document.getElementById('loading').style.display = show ? 'block' : 'none';
+        }
+
+        function showStatus(message, type) {
+            const statusDiv = document.getElementById('status');
+            statusDiv.className = `status ${type}`;
+            statusDiv.textContent = message;
+            statusDiv.style.display = 'block';
+            
+            if (type === 'success' || type === 'info') {
+                setTimeout(() => {
+                    statusDiv.style.display = 'none';
+                }, 3000);
+            }
+        }
+
+        function verDetalhes(id) {
+            const projeto = projetos.find(p => p.id === id);
+            if (projeto) {
+                const detalhes = `
+DETALHES DO PROJETO
+
+Projeto: ${projeto.nome}
+Empresa: ${projeto.nome_empresa}
+CNPJ: ${projeto.cnpj}
+CNAE: ${projeto.cnae}
+
+Endereço: ${projeto.endereco}
+CEP: ${projeto.cep}
+Bairro: ${projeto.bairro}
+Cidade: ${projeto.cidade}
+Estado: ${projeto.estado}
+
+Contato: ${projeto.telefone_contato}
+Responsável: ${projeto.responsavel}
+Tipo: ${projeto.tipo_projeto}
+${projeto.numero_projeto_anterior ? `Projeto Anterior: ${projeto.numero_projeto_anterior}` : ''}
+
+Data de Criação: ${formatarData(projeto.data_criacao)}
+Situação: ${projeto.situacao === 1 ? 'Ativo' : 'Inativo'}
+                `;
+                alert(detalhes);
+            }
+        }
+
+        function editarProjeto(id) {
+            // Aqui você pode implementar um modal de edição ou redirecionar para uma página de edição
+            showStatus(`Funcionalidade de edição será implementada para o projeto ID: ${id}`, 'info');
+        }
+
+        async function atualizarProjeto(id, dados) {
+            try {
+                showStatus('Atualizando projeto...', 'info');
+                
+                const response = await fetch(`http://localhost:3000/api/projetos/${id}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(dados)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Erro: ${response.status}`);
+                }
+
+                showStatus('Projeto atualizado com sucesso! 🎉', 'success');
+                carregarProjetos(); // Recarregar lista
+                
+            } catch (error) {
+                console.error('Erro ao atualizar projeto:', error);
+                showStatus('Erro ao atualizar projeto. Tente novamente.', 'error');
+            }
+        }
+
+        function abrirProjeto(id) {
+            // Aqui você pode implementar a navegação para a tela específica do projeto
+            showStatus(`Abrindo projeto ID: ${id}...`, 'info');
+            // Exemplo: window.location.href = `projeto-detalhes.html?id=${id}`;
+        }
+
+        function duplicarProjeto(id) {
+            const projeto = projetos.find(p => p.id === id);
+            if (projeto) {
+                const novoNome = prompt('Digite o nome para o projeto duplicado:', `${projeto.nome} - Cópia`);
+                if (novoNome && novoNome.trim() !== '') {
+                    criarProjeto({ nome: novoNome.trim() });
+                }
+            }
+        }
+
+        async function criarProjeto(dados) {
+            try {
+                showStatus('Criando projeto...', 'info');
+                
+                const response = await fetch('http://localhost:3000/api/projetos', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(dados)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Erro: ${response.status}`);
+                }
+
+                showStatus('Projeto criado com sucesso! 🎉', 'success');
+                carregarProjetos(); // Recarregar lista
+                
+            } catch (error) {
+                console.error('Erro ao criar projeto:', error);
+                showStatus('Erro ao criar projeto. Tente novamente.', 'error');
+            }
+        }
+
+        function voltarAoLogin() {
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>

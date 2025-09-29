@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfis Locais - AVCB</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #d32f2f;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        input, select, textarea {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        input[type="checkbox"] {
+            width: auto;
+            margin-right: 8px;
+        }
+        .checkbox-group {
+            flex-direction: row;
+            align-items: center;
+        }
+        button {
+            background-color: #d32f2f;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        button:hover {
+            background-color: #b71c1c;
+        }
+        .btn-secondary {
+            background-color: #666;
+        }
+        .btn-secondary:hover {
+            background-color: #555;
+        }
+        .section {
+            background: #f9f9f9;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            border-left: 4px solid #d32f2f;
+        }
+        .section h3 {
+            margin-top: 0;
+            color: #d32f2f;
+        }
+        #perfisLista {
+            margin-top: 30px;
+        }
+        .perfil-item {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+        .perfil-item h4 {
+            margin: 0 0 10px 0;
+            color: #d32f2f;
+        }
+        .campo-valor {
+            display: inline-block;
+            margin-right: 20px;
+            margin-bottom: 5px;
+        }
+        .campo-label {
+            font-weight: bold;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔥 Perfis Locais - AVCB</h1>
+        
+        <!-- Informações do Projeto -->
+        <div id="projetoInfo" class="section" style="display: none;">
+            <h3>📋 Projeto Selecionado</h3>
+            <div id="dadosProjeto"></div>
+        </div>
+        
+        <div class="section">
+            <h3>Novo Perfil Local</h3>
+            <form id="perfilForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="projetoId">ID do Projeto *:</label>
+                        <input type="number" id="projetoId" name="projetoId" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="tipo_projeto">Tipo de Projeto:</label>
+                        <select id="tipo_projeto" name="tipo_projeto">
+                            <option value="">Selecione...</option>
+                            <option value="novo">Novo</option>
+                            <option value="reforma">Reforma</option>
+                            <option value="regularização">Regularização</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="ocupacao_edificacao">Ocupação da Edificação:</label>
+                        <input type="text" id="ocupacao_edificacao" name="ocupacao_edificacao" placeholder="Ex: Residencial, Comercial...">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="altura_edificacao">Altura da Edificação (m):</label>
+                        <input type="number" id="altura_edificacao" name="altura_edificacao" step="0.01" placeholder="0.00">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="area_edificacao">Área da Edificação (m²):</label>
+                        <input type="number" id="area_edificacao" name="area_edificacao" step="0.01" placeholder="0.00">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="grupo_incendio">Grupo de Incêndio:</label>
+                        <select id="grupo_incendio" name="grupo_incendio">
+                            <option value="">Selecione...</option>
+                            <option value="baixo">Baixo</option>
+                            <option value="médio">Médio</option>
+                            <option value="alto">Alto</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="plano_prevencao" name="plano_prevencao">
+                        <label for="plano_prevencao">Possui Plano de Prevenção?</label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="projeto_tecnico">Projeto Técnico:</label>
+                        <input type="text" id="projeto_tecnico" name="projeto_tecnico" placeholder="Referência técnica">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="qtde_saidas_emergencia">Qtde. Saídas de Emergência:</label>
+                        <input type="number" id="qtde_saidas_emergencia" name="qtde_saidas_emergencia" min="0">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="qtde_pavimentos">Qtde. Pavimentos:</label>
+                        <input type="number" id="qtde_pavimentos" name="qtde_pavimentos" min="0">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="qtde_hidrantes">Qtde. Hidrantes:</label>
+                        <input type="number" id="qtde_hidrantes" name="qtde_hidrantes" min="0">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="qtde_mangotinhos">Qtde. Mangotinhos:</label>
+                        <input type="number" id="qtde_mangotinhos" name="qtde_mangotinhos" min="0">
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 20px;">
+                    <button type="submit">Salvar Perfil</button>
+                    <button type="button" class="btn-secondary" onclick="carregarPerfis()">Listar Perfis</button>
+                    <button type="button" class="btn-secondary" onclick="limparFormulario()">Limpar</button>
+                    <button type="button" class="btn-secondary" onclick="voltarProjetos()" id="btnVoltarProjetos" style="display: none;">← Voltar aos Projetos</button>
+                </div>
+            </form>
+        </div>
+        
+        <div id="perfisLista" class="section">
+            <h3>Lista de Perfis</h3>
+            <div id="listaPerfis"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:3000/api';
+        let token = localStorage.getItem('token');
+        let projetoSelecionado = null;
+        
+        // Capturar parâmetro projetoId da URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const projetoId = urlParams.get('projetoId');
+        
+        if (!token) {
+            alert('Token de autenticação não encontrado. Redirecionando para login.');
+            window.location.href = 'login.html';
+        }
+        
+        // Se há um projeto específico, carregar informações dele
+        if (projetoId) {
+            carregarProjeto(projetoId);
+        }
+        
+        async function carregarProjeto(id) {
+            try {
+                const response = await fetch(`${API_BASE}/projetos/${id}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (response.ok) {
+                    projetoSelecionado = await response.json();
+                    exibirInfoProjeto(projetoSelecionado);
+                    
+                    // Pré-preencher o campo projetoId
+                    document.getElementById('projetoId').value = id;
+                    document.getElementById('projetoId').readOnly = true;
+                    
+                    // Carregar apenas perfis deste projeto
+                    carregarPerfisPorProjeto(id);
+                } else {
+                    alert('Erro ao carregar informações do projeto');
+                }
+            } catch (error) {
+                console.error('Erro:', error);
+                alert('Erro ao conectar com a API: ' + error.message);
+            }
+        }
+        
+        function exibirInfoProjeto(projeto) {
+            const projetoInfo = document.getElementById('projetoInfo');
+            const dadosProjeto = document.getElementById('dadosProjeto');
+            
+            dadosProjeto.innerHTML = `
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                    <div><strong>Nome:</strong> ${projeto.nome}</div>
+                    <div><strong>Empresa:</strong> ${projeto.nome_empresa}</div>
+                    <div><strong>CNPJ:</strong> ${projeto.cnpj}</div>
+                    <div><strong>Tipo:</strong> ${projeto.tipo_projeto}</div>
+                    <div><strong>Cidade/Estado:</strong> ${projeto.cidade}/${projeto.estado}</div>
+                    <div><strong>Responsável:</strong> ${projeto.responsavel}</div>
+                </div>
+            `;
+            
+            projetoInfo.style.display = 'block';
+        }
+        
+        async function carregarPerfisPorProjeto(projetoId) {
+            try {
+                const response = await fetch(`${API_BASE}/perfis-local/projeto/${projetoId}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (response.ok) {
+                    const perfis = await response.json();
+                    exibirPerfis(perfis);
+                } else {
+                    document.getElementById('listaPerfis').innerHTML = '<p>Nenhum perfil encontrado para este projeto.</p>';
+                }
+            } catch (error) {
+                console.error('Erro:', error);
+                document.getElementById('listaPerfis').innerHTML = '<p>Erro ao carregar perfis do projeto.</p>';
+            }
+        }
+        
+        document.getElementById('perfilForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const data = {};
+            
+            formData.forEach((value, key) => {
+                if (key === 'plano_prevencao') {
+                    data[key] = document.getElementById(key).checked;
+                } else if (value && value.trim() !== '') {
+                    if (['projetoId', 'qtde_saidas_emergencia', 'qtde_pavimentos', 'qtde_hidrantes', 'qtde_mangotinhos'].includes(key)) {
+                        data[key] = parseInt(value);
+                    } else if (['altura_edificacao', 'area_edificacao', 'area_subsolo', 'area_central_gas', 'lci_reservatorio'].includes(key)) {
+                        data[key] = parseFloat(value);
+                    } else {
+                        data[key] = value;
+                    }
+                }
+            });
+            
+            try {
+                const response = await fetch(`${API_BASE}/perfis-local`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                if (response.ok) {
+                    alert('Perfil criado com sucesso!');
+                    limparFormulario();
+                    // Se há um projeto específico, carregar apenas perfis dele
+                    if (projetoId) {
+                        carregarPerfisPorProjeto(projetoId);
+                    } else {
+                        carregarPerfis();
+                    }
+                } else {
+                    const error = await response.text();
+                    alert('Erro ao criar perfil: ' + error);
+                }
+            } catch (error) {
+                console.error('Erro:', error);
+                alert('Erro ao conectar com a API: ' + error.message);
+            }
+        });
+        
+        async function carregarPerfis() {
+            // Se há um projeto específico, carregar apenas perfis dele
+            if (projetoId) {
+                carregarPerfisPorProjeto(projetoId);
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE}/perfis-local`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (response.ok) {
+                    const perfis = await response.json();
+                    exibirPerfis(perfis);
+                } else {
+                    alert('Erro ao carregar perfis');
+                }
+            } catch (error) {
+                console.error('Erro:', error);
+                alert('Erro ao conectar com a API: ' + error.message);
+            }
+        }
+        
+        function exibirPerfis(perfis) {
+            const lista = document.getElementById('listaPerfis');
+            
+            if (perfis.length === 0) {
+                lista.innerHTML = '<p>Nenhum perfil encontrado.</p>';
+                return;
+            }
+            
+            let html = '';
+            perfis.forEach(perfil => {
+                html += `
+                    <div class="perfil-item">
+                        <h4>Perfil #${perfil.id} - Projeto: ${perfil.projeto.nome}</h4>
+                        <div class="campo-valor">
+                            <span class="campo-label">Tipo:</span> ${perfil.tipo_projeto || 'N/A'}
+                        </div>
+                        <div class="campo-valor">
+                            <span class="campo-label">Ocupação:</span> ${perfil.ocupacao_edificacao || 'N/A'}
+                        </div>
+                        <div class="campo-valor">
+                            <span class="campo-label">Altura:</span> ${perfil.altura_edificacao || 'N/A'} m
+                        </div>
+                        <div class="campo-valor">
+                            <span class="campo-label">Área:</span> ${perfil.area_edificacao || 'N/A'} m²
+                        </div>
+                        <div class="campo-valor">
+                            <span class="campo-label">Grupo Incêndio:</span> ${perfil.grupo_incendio || 'N/A'}
+                        </div>
+                        <div class="campo-valor">
+                            <span class="campo-label">Pavimentos:</span> ${perfil.qtde_pavimentos || 'N/A'}
+                        </div>
+                        <div class="campo-valor">
+                            <span class="campo-label">Hidrantes:</span> ${perfil.qtde_hidrantes || 'N/A'}
+                        </div>
+                        <div style="margin-top: 10px;">
+                            <button onclick="editarPerfil(${perfil.id})">Editar</button>
+                            <button onclick="excluirPerfil(${perfil.id})" style="background-color: #f44336;">Excluir</button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            lista.innerHTML = html;
+        }
+        
+        function limparFormulario() {
+            document.getElementById('perfilForm').reset();
+            
+            // Se há um projeto específico, manter o projetoId pré-preenchido
+            if (projetoId) {
+                document.getElementById('projetoId').value = projetoId;
+            }
+        }
+        
+        async function excluirPerfil(id) {
+            if (!confirm('Deseja realmente excluir este perfil?')) return;
+            
+            try {
+                const response = await fetch(`${API_BASE}/perfis-local/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (response.ok) {
+                    alert('Perfil excluído com sucesso!');
+                    carregarPerfis();
+                } else {
+                    alert('Erro ao excluir perfil');
+                }
+            } catch (error) {
+                console.error('Erro:', error);
+                alert('Erro ao conectar com a API: ' + error.message);
+            }
+        }
+        
+        function editarPerfil(id) {
+            // Implementar funcionalidade de edição
+            alert('Funcionalidade de edição será implementada em breve');
+        }
+        
+        function voltarProjetos() {
+            window.location.href = 'projetos-anteriores.html';
+        }
+        
+        // Carregar perfis ao abrir a página
+        carregarPerfis();
+        
+        // Mostrar botão "Voltar aos Projetos" se estiver visualizando um projeto específico
+        if (projetoId) {
+            document.getElementById('btnVoltarProjetos').style.display = 'inline-block';
+        }
+    </script>
+</body>
+</html>

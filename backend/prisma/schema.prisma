@@ -57,8 +57,39 @@ model Projeto {
   userId                 String
   createdAt              DateTime @default(now())
   updatedAt              DateTime @updatedAt
+  perfisLocal            PerfilLocal[]
 
   @@map("projetos")
+}
+
+model PerfilLocal {
+  id                        Int       @id @default(autoincrement())
+  projeto                   Projeto   @relation(fields: [projetoId], references: [id], onDelete: Cascade)
+  projetoId                 Int
+  tipo_projeto              String?                                         // Item 5
+  ocupacao_edificacao       String?                                         // Item 6 (ligado à Tabela 1 do Decreto)
+  altura_edificacao         Float?                                          // Item 7
+  area_edificacao           Float?                                          // Item 7B
+  grupo_incendio            String?                                         // Item 8 (baixo, médio, alto)
+  plano_prevencao           Boolean?                                        // Item 9
+  projeto_tecnico           String?                                         // Item 10 (referência de tabela técnica)
+  qtde_saidas_emergencia    Int?                                            // Item 11
+  sinalizacao_emergencia    String?                                         // Item 12 (quantidade e tipos)
+  extintores                String?                                         // Item 13 (tipo e peso)
+  qtde_iluminacao_emergencia Int?                                           // Item 14
+  qtde_pavimentos           Int?                                            // Item 15
+  area_subsolo              Float?                                          // Item 16
+  ocupacao_subsolo          String?                                         // Item 17
+  area_central_gas          Float?                                          // Item 18
+  tipo_cilindro_gas         String?                                         // Item 18
+  qtde_hidrantes            Int?                                            // Item 19
+  qtde_mangotinhos          Int?                                            // Item 19
+  bombas_incendio           String?                                         // Item 20 (quantidade e capacidade)
+  lci_reservatorio          Float?                                          // Item 21 (m³/L)
+  createdAt                 DateTime  @default(now())
+  updatedAt                 DateTime  @updatedAt
+
+  @@map("perfis_local")
 }
 
 model Tabela1 {

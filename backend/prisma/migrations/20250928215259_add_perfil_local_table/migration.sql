@@ -1,0 +1,28 @@
+-- CreateTable
+CREATE TABLE "perfis_local" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "projetoId" INTEGER NOT NULL,
+    "tipo_projeto" TEXT,
+    "ocupacao_edificacao" TEXT,
+    "altura_edificacao" REAL,
+    "area_edificacao" REAL,
+    "grupo_incendio" TEXT,
+    "plano_prevencao" BOOLEAN,
+    "projeto_tecnico" TEXT,
+    "qtde_saidas_emergencia" INTEGER,
+    "sinalizacao_emergencia" TEXT,
+    "extintores" TEXT,
+    "qtde_iluminacao_emergencia" INTEGER,
+    "qtde_pavimentos" INTEGER,
+    "area_subsolo" REAL,
+    "ocupacao_subsolo" TEXT,
+    "area_central_gas" REAL,
+    "tipo_cilindro_gas" TEXT,
+    "qtde_hidrantes" INTEGER,
+    "qtde_mangotinhos" INTEGER,
+    "bombas_incendio" TEXT,
+    "lci_reservatorio" REAL,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" DATETIME NOT NULL,
+    CONSTRAINT "perfis_local_projetoId_fkey" FOREIGN KEY ("projetoId") REFERENCES "projetos" ("id") ON DELETE CASCADE ON UPDATE CASCADE
+);

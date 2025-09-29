@@ -4,6 +4,7 @@ import { UsersModule } from './users/users.module';
 import { TasksModule } from './tasks/tasks.module';
 import { ProjetosModule } from './projetos/projetos.module';
 import { ClassificacaoModule } from './classificacao/classificacao.module';
+import { PerfilLocalModule } from './perfis-local/perfis-local.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { TestController } from './test.controller';
 
@@ -15,6 +16,7 @@ import { TestController } from './test.controller';
     TasksModule,
     ProjetosModule,
     ClassificacaoModule,
+    PerfilLocalModule,
   ],
   controllers: [TestController],
 })

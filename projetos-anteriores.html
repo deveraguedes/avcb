@@ -122,6 +122,16 @@
             transform: translateY(-2px);
         }
 
+        .btn-warning {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-warning:hover {
+            background: #c82333;
+            transform: translateY(-2px);
+        }
+
         .projects-container {
             margin-top: 20px;
         }
@@ -467,6 +477,9 @@
                         <button class="btn btn-success btn-small" onclick="editarProjeto(${projeto.id})">
                             ✏️ Editar
                         </button>
+                        <button class="btn btn-warning btn-small" onclick="gerenciarPerfil(${projeto.id})">
+                            🔥 Gerenciar Perfil
+                        </button>
                         <button class="btn btn-secondary btn-small" onclick="duplicarProjeto(${projeto.id})">
                             📋 Duplicar
                         </button>
@@ -597,6 +610,11 @@ Situação: ${projeto.situacao === 1 ? 'Ativo' : 'Inativo'}
                 console.error('Erro ao criar projeto:', error);
                 showStatus('Erro ao criar projeto. Tente novamente.', 'error');
             }
+        }
+
+        function gerenciarPerfil(projetoId) {
+            // Redireciona para a página de perfis locais com o ID do projeto
+            window.location.href = `perfis-local.html?projetoId=${projetoId}`;
         }
 
         function voltarAoLogin() {

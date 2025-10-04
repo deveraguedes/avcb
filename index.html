@@ -106,7 +106,7 @@
         
         async function getUsers() {
             const result = document.getElementById('result');
-            const token = localStorage.getItem('token');
+            const token = localStorage.getItem('avcb_token');
             
             if (!token) {
                 result.innerHTML = '⚠️ Faça login primeiro (registre um usuário)';

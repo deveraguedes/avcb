@@ -138,8 +138,18 @@
                     </div>
                     
                     <div class="form-group">
-                        <label for="ocupacao_edificacao">Ocupação da Edificação:</label>
-                        <input type="text" id="ocupacao_edificacao" name="ocupacao_edificacao" placeholder="Ex: Residencial, Comercial...">
+                        <label for="ocupacao_edificacao">Ocupação da Edificação *:</label>
+                        <select id="ocupacao_edificacao" name="ocupacao_edificacao" required onchange="carregarDescricoes()">
+                            <option value="">Selecione a ocupação...</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="descricao_ocupacao">Descrição/Exemplos *:</label>
+                        <select id="descricao_ocupacao" name="descricao_ocupacao" required onchange="selecionarDivisao()">
+                            <option value="">Primeiro selecione a ocupação...</option>
+                        </select>
+                        <input type="hidden" id="codigo_divisao" name="codigo_divisao">
                     </div>
                     
                     <div class="form-group">
@@ -210,7 +220,7 @@
 
     <script>
         const API_BASE = 'http://localhost:3000/api';
-        let token = localStorage.getItem('token');
+        let token = localStorage.getItem('avcb_token');
         let projetoSelecionado = null;
         
         // Capturar parâmetro projetoId da URL
@@ -289,6 +299,193 @@
             } catch (error) {
                 console.error('Erro:', error);
                 document.getElementById('listaPerfis').innerHTML = '<p>Erro ao carregar perfis do projeto.</p>';
+            }
+        }
+        
+        // Dados mock para teste (temporário)
+        const classificacoesMock = [
+            {
+                id: 1,
+                codigo: 'A-1',
+                ocupacao: 'Residencial',
+                classificacao: 'Habitação Unifamiliar',
+                grupo: 'A',
+                subgrupo: 'A-1',
+                divisao: 'Casas térreas ou sobrados',
+                observacoes: 'Casas, sobrados, condomínios residenciais'
+            },
+            {
+                id: 2,
+                codigo: 'A-2',
+                ocupacao: 'Residencial',
+                classificacao: 'Habitação Multifamiliar',
+                grupo: 'A',
+                subgrupo: 'A-2',
+                divisao: 'Edifícios de apartamentos',
+                observacoes: 'Apartamentos, quitinetes, flats'
+            },
+            {
+                id: 3,
+                codigo: 'B-1',
+                ocupacao: 'Serviços de Hospedagem',
+                classificacao: 'Hotéis e Similares',
+                grupo: 'B',
+                subgrupo: 'B-1',
+                divisao: 'Hotéis, motéis, pousadas',
+                observacoes: 'Estabelecimentos com mais de 16 leitos'
+            },
+            {
+                id: 4,
+                codigo: 'C-1',
+                ocupacao: 'Comercial',
+                classificacao: 'Comércio com baixa carga de incêndio',
+                grupo: 'C',
+                subgrupo: 'C-1',
+                divisao: 'Comércio de baixo risco',
+                observacoes: 'Livrarias, farmácias, floriculturas'
+            },
+            {
+                id: 5,
+                codigo: 'C-2',
+                ocupacao: 'Comercial',
+                classificacao: 'Comércio com média carga de incêndio',
+                grupo: 'C',
+                subgrupo: 'C-2',
+                divisao: 'Supermercados, lojas',
+                observacoes: 'Supermercados, shopping centers, galerias'
+            },
+            {
+                id: 6,
+                codigo: 'D-1',
+                ocupacao: 'Serviços Profissionais',
+                classificacao: 'Escritórios',
+                grupo: 'D',
+                subgrupo: 'D-1',
+                divisao: 'Locais para prestação de serviços',
+                observacoes: 'Escritórios, consultórios, repartições'
+            },
+            {
+                id: 7,
+                codigo: 'E-1',
+                ocupacao: 'Educacional',
+                classificacao: 'Escolas em geral',
+                grupo: 'E',
+                subgrupo: 'E-1',
+                divisao: 'Estabelecimentos de ensino',
+                observacoes: 'Creches, escolas, faculdades'
+            },
+            {
+                id: 8,
+                codigo: 'F-1',
+                ocupacao: 'Local de Reunião de Público',
+                classificacao: 'Esporte',
+                grupo: 'F',
+                subgrupo: 'F-1',
+                divisao: 'Locais esportivos',
+                observacoes: 'Ginásios, estádios, quadras'
+            }
+        ];
+
+        // Função para carregar ocupações da Tabela1
+        async function carregarOcupacoes() {
+            try {
+                console.log('Iniciando carregamento de ocupações...');
+                
+                // Carregando dados reais da API
+                const response = await fetch('http://localhost:3000/api/classificacao');
+                console.log('Response status:', response.status);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const classificacoes = await response.json();
+                console.log('Classificações recebidas:', classificacoes);
+                
+                const ocupacoes = [...new Set(classificacoes.map(item => item.ocupacao))].sort();
+                console.log('Ocupações extraídas:', ocupacoes);
+                
+                const selectOcupacao = document.getElementById('ocupacao_edificacao');
+                if (!selectOcupacao) {
+                    console.error('Elemento ocupacao_edificacao não encontrado!');
+                    return;
+                }
+                
+                selectOcupacao.innerHTML = '<option value="">Selecione a ocupação...</option>';
+                
+                ocupacoes.forEach(ocupacao => {
+                    const option = document.createElement('option');
+                    option.value = ocupacao;
+                    option.textContent = ocupacao;
+                    selectOcupacao.appendChild(option);
+                });
+                
+                console.log('Ocupações carregadas com sucesso:', ocupacoes);
+            } catch (error) {
+                console.error('Erro ao carregar ocupações:', error);
+                alert('Erro ao carregar ocupações: ' + error.message);
+            }
+        }
+        
+        // Função para carregar descrições filtradas pela ocupação
+        async function carregarDescricoes() {
+            const ocupacaoSelecionada = document.getElementById('ocupacao_edificacao').value;
+            const selectDescricao = document.getElementById('descricao_ocupacao');
+            
+            console.log('Carregando descrições para ocupação:', ocupacaoSelecionada);
+            
+            if (!ocupacaoSelecionada) {
+                selectDescricao.innerHTML = '<option value="">Primeiro selecione a ocupação...</option>';
+                return;
+            }
+            
+            try {
+                // Carregando dados reais da API
+                const response = await fetch('http://localhost:3000/api/classificacao');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const classificacoes = await response.json();
+                const descricoesFiltradas = classificacoes.filter(item => item.ocupacao === ocupacaoSelecionada);
+                
+                console.log('Descrições encontradas:', descricoesFiltradas);
+                
+                selectDescricao.innerHTML = '<option value="">Selecione a descrição/exemplo...</option>';
+                
+                descricoesFiltradas.forEach(item => {
+                    const option = document.createElement('option');
+                    option.value = item.id;
+                    option.dataset.codigo = item.codigo;
+                    
+                    // Criar texto descritivo
+                    let texto = item.classificacao || '';
+                    if (item.grupo) texto += ` - ${item.grupo}`;
+                    if (item.subgrupo) texto += ` (${item.subgrupo})`;
+                    if (item.divisao) texto += ` - ${item.divisao}`;
+                    if (item.observacoes) texto += ` [${item.observacoes}]`;
+                    
+                    option.textContent = texto || `Código: ${item.codigo}`;
+                    selectDescricao.appendChild(option);
+                });
+                
+                console.log('Descrições carregadas com sucesso');
+            } catch (error) {
+                console.error('Erro ao carregar descrições:', error);
+                alert('Erro ao carregar descrições: ' + error.message);
+            }
+        }
+        
+        // Função para salvar o código da divisão selecionada
+        function selecionarDivisao() {
+            const selectDescricao = document.getElementById('descricao_ocupacao');
+            const codigoDivisao = document.getElementById('codigo_divisao');
+            
+            if (selectDescricao.selectedIndex > 0) {
+                const opcaoSelecionada = selectDescricao.options[selectDescricao.selectedIndex];
+                codigoDivisao.value = opcaoSelecionada.dataset.codigo;
+            } else {
+                codigoDivisao.value = '';
             }
         }
         
@@ -453,7 +650,8 @@
             window.location.href = 'projetos-anteriores.html';
         }
         
-        // Carregar perfis ao abrir a página
+        // Carregar dados iniciais
+        carregarOcupacoes();
         carregarPerfis();
         
         // Mostrar botão "Voltar aos Projetos" se estiver visualizando um projeto específico

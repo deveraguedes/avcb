@@ -1,0 +1,57 @@
+Grupo;ocupacao;divisao;descricao;Exemplos
+A;Residencial;A-1;Habitação unifamiliar;Casas térreas, assobradadas, condomínios horizontais
+A;Residencial;A-2;Habitação multifamiliar;Edifícios de apartamento
+A;Residencial;A-3;Habitação coletiva;Pensionatos, internatos, alojamentos, conventos, residências geriátricas (até 16 leitos)
+B;Serviço de Hospedagem;B-1;Hotel e assemelhado;Hotéis, motéis, pensões, hospedarias, pousadas, albergues
+B;Serviço de Hospedagem;B-2;Hotel residencial;Apart-hotéis, flats, hotéis residenciais
+C;Comercial;C-1;Comércio com baixa carga de incêndio;Artigos de metal, louças, artigos hospitalares
+C;Comercial;C-2;Comércio com média/alta carga de incêndio;Lojas de departamento, supermercados, mercados
+C;Comercial;C-3;Shopping centers;Centros de compras em geral
+D;Serviço profissional;D-1;Local de prestação de serviço ou negócios;Escritórios, repartições públicas, cabeleireiros
+D;Serviço profissional;D-2;Agência bancária;Agências bancárias
+D;Serviço profissional;D-3;Serviço de reparação;Lavanderias, assistência técnica, chaveiros
+D;Serviço profissional;D-4;Laboratório;Laboratórios clínicos sem internação, químicos, fotográficos
+E;Educacional e cultura física;E-1;Escola em geral;Ensino fundamental, médio, superior, pré-vestibular
+E;Educacional e cultura física;E-2;Escola especial;Escolas de artes, línguas, religiosas
+E;Educacional e cultura física;E-3;Espaço para cultura física;Academias, artes marciais, esportes coletivos (sem arquibancadas)
+E;Educacional e cultura física;E-4;Centro de treinamento profissional;Escolas profissionais em geral
+E;Educacional e cultura física;E-5;Pré-escola;Creches, jardins de infância
+E;Educacional e cultura física;E-6;Escola para portadores de deficiência;Escolas para deficientes visuais, auditivos, excepcionais
+F;Local de Reunião de Público;F-1;Local onde há objeto de valor inestimável;Museus, bibliotecas, galerias de arte
+F;Local de Reunião de Público;F-2;Local religioso e velório;Igrejas, capelas, templos, cemitérios, crematórios, necrotérios
+F;Local de Reunião de Público;F-3;Centro esportivo e de exibição;Estádios, ginásios, arenas, sambódromos
+F;Local de Reunião de Público;F-4;Estação e terminal de passageiro;Estações, portos, aeroportos, metrô
+F;Local de Reunião de Público;F-5;Arte cênica e auditório;Teatros, cinemas, auditórios
+F;Local de Reunião de Público;F-6;Clubes sociais e diversão;Boates, clubes, restaurantes dançantes, bingo, boliche
+F;Local de Reunião de Público;F-7;Construção provisória;Circos e assemelhados
+F;Local de Reunião de Público;F-8;Local para refeição;Restaurantes, lanchonetes, bares, cafés
+F;Local de Reunião de Público;F-9;Recreação pública;Jardins zoológicos, parques recreativos
+F;Local de Reunião de Público;F-10;Exposição de objetos ou animais;Salões e salas de exposição permanentes
+G;Serviço automotivo;G-1;Garagem sem acesso ao público e sem abastecimento;Garagens automáticas ou com manobristas
+G;Serviço automotivo;G-2;Garagem com acesso ao público e sem abastecimento;Garagens coletivas
+G;Serviço automotivo;G-3;Local com abastecimento de combustível;Postos de abastecimento e serviço
+G;Serviço automotivo;G-4;Serviço de conservação, manutenção e reparos;Oficinas de veículos, borracharias
+G;Serviço automotivo;G-5;Hangares;Abrigos para aeronaves
+H;Serviço de saúde e institucional;H-1;Hospital veterinário e assemelhados;Hospitais e clínicas veterinárias
+H;Serviço de saúde e institucional;H-2;Local para pessoas com cuidados especiais;Asilos, orfanatos, hospitais psiquiátricos
+H;Serviço de saúde e institucional;H-3;Hospital e assemelhado;Hospitais, prontos-socorros, clínicas com internação
+H;Serviço de saúde e institucional;H-4;Edificações militares e policiais;Quartéis, delegacias, postos policiais
+H;Serviço de saúde e institucional;H-5;Local onde a liberdade sofre restrições;Prisão, penitenciária, manicômio
+H;Serviço de saúde e institucional;H-6;Clínica e consultório médico/odontológico;Clínicas médicas sem internação
+I;Indústria;I-1;Baixo potencial de incêndio (<300MJ/m²);Aço, jóias, relógios, ferramentas
+I;Indústria;I-2;Médio potencial de incêndio (300–1200MJ/m²);Automóveis, móveis, marcenarias
+I;Indústria;I-3;Alto risco de incêndio (>1200MJ/m²);Tintas, borracha, inflamáveis, grãos
+J;Depósito;J-1;Depósito de material incombustível;Areia, cimento, tijolos
+J;Depósito;J-2;Depósito até 300MJ/m²;Diversos materiais embalados
+J;Depósito;J-3;Depósito entre 300–1200MJ/m²;Diversos materiais
+J;Depósito;J-4;Depósito acima de 1200MJ/m²;Diversos materiais combustíveis
+L;Explosivo;L-1;Comércio;Fogos de artifício
+L;Explosivo;L-2;Indústria;Indústria de explosivos
+L;Explosivo;L-3;Depósito;Depósito de explosivos
+M;Especial;M-1;Túnel;Túneis rodoferroviários ou marítimos
+M;Especial;M-2;Líquido ou gás inflamável/combustível;Produção, manipulação, armazenamento de inflamáveis
+M;Especial;M-3;Central de comunicação e energia;Centrais telefônicas, de energia, transmissão
+M;Especial;M-4;Propriedade em transformação;Construção ou demolição
+M;Especial;M-5;Silos;Armazéns de grãos
+M;Especial;M-6;Terra selvagem;Florestas, reservas ecológicas
+M;Especial;M-7;Pátio de contêineres;Áreas abertas para contêineres

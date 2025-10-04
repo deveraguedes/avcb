@@ -68,6 +68,7 @@ model PerfilLocal {
   projetoId                 Int
   tipo_projeto              String?                                         // Item 5
   ocupacao_edificacao       String?                                         // Item 6 (ligado à Tabela 1 do Decreto)
+  codigo_divisao            String?                                         // Código da divisão da Tabela1
   altura_edificacao         Float?                                          // Item 7
   area_edificacao           Float?                                          // Item 7B
   grupo_incendio            String?                                         // Item 8 (baixo, médio, alto)

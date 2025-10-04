@@ -2,6 +2,7 @@ export class CreatePerfilLocalDto {
   projetoId: number;
   tipo_projeto?: string;
   ocupacao_edificacao?: string;
+  codigo_divisao?: string;
   altura_edificacao?: number;
   area_edificacao?: number;
   grupo_incendio?: string;

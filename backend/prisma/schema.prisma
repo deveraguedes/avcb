@@ -109,3 +109,29 @@ model Tabela1 {
 
   @@map("tabela1")
 }
+
+model Tabela2 {
+  id           Int      @id @default(autoincrement())
+  tipo         String   @unique
+  denominacao  String
+  altura       String
+  ativo        Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("tabela2")
+}
+
+model AnexoA {
+  id                    Int      @id @default(autoincrement())
+  ocupacao_uso          String
+  descricao             String
+  divisao               String
+  cnae                  String
+  carga_incendio_mj_m2  Int
+  ativo                 Boolean  @default(true)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  @@map("anexoa")
+}

@@ -1,0 +1,7 @@
+﻿Tipo,Denominação,Altura
+I,"Edificação, estrutura e área de risco Térrea",Um pavimento
+II,"Edificação, estrutura e área de risco Baixa","H ≤ 6,00 m"
+III,"Edificação, estrutura e área de risco de Baixa-Média Altura","6,00 m < H ≤ 12,00 m"
+IV,"Edificação, estrutura e área de risco de Média Altura","12,00 m < H ≤ 23,00 m"
+V,"Edificação, estrutura e área de risco Mediatamente Alta","23,00 m < H ≤ 30,00 m"
+VI,"Edificação, estrutura e área de risco Alta","Acima de 30,00 m"
